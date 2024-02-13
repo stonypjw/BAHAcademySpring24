@@ -1,8 +1,10 @@
 global class CreditCheckRequest {
 
-    global static void CreditCheck(String accountId){
+    @InvocableMethod (label='Credit Check Request'
+                      description='Sends a request to Credit Check service')
+    global static void CreditCheck(List<String> accountIds){
 
-        callCreditCheckAPI(accountId);
+        callCreditCheckAPI(accountIds[0]);
 
     }
 
