@@ -18,7 +18,7 @@ global class CreditCheckRequest {
                         LIMIT 1];
 
     
-        String url = 'https://splx201-developer-edition.na124.force.com';
+        String url = 'https://steve-wasula-splx201-dev-ed.my.salesforce-sites.com/creditcheck';
         url += '?name='+EncodingUtil.urlEncode(acct.Name, 'UTF-8');
         url += '&email='+acct.Owner.Email;
         url += '&requestor='+EncodingUtil.urlEncode(acct.Owner.Name, 'UTF-8');
@@ -33,6 +33,8 @@ global class CreditCheckRequest {
 
         HttpResponse res = h.send(req);
 
+        System.Debug('HTTP Response: '+res.getStatusCode());
+        System.Debug('HTTP Response: '+res.getStatus());
         System.Debug('HTTP Response: '+res.getBody());
     }
 }
