@@ -1,0 +1,12 @@
+<apex:page standardController="Account">
+    <head>
+        <apex:slds />
+    </head>
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+You have eovveridden the standard view page
+
+<apex:detail/>
+
+<!-- End Default Content REMOVE THIS -->
+</apex:page>
