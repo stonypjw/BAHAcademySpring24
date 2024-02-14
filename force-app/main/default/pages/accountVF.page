@@ -5,6 +5,16 @@
 <!-- Begin Default Content REMOVE THIS -->
 <h1>Congratulations</h1>
 You have eovveridden the standard view page
+<apex:pageBlock title="My Content">
+
+<apex:pageBlockTable value="{!account.Contacts}" var="item">
+
+    <apex:column value="{!item.name}"/>
+    <apex:column value="{!item.phone}"/>
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
 
 <apex:detail/>
 

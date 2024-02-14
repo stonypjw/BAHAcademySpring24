@@ -1,0 +1,23 @@
+<apex:page standardController="Invoice__c" recordSetVar="Invoices" 
+                                           extensions="InvoicesController">
+    <apex:form>
+        <apex:pageBlock>
+            <apex:pageBlockButtons>
+                <!-- Need a Save button and a cancel button -->
+                <apex:commandButton value="Save" action="{!save}"></apex:commandButton>
+                <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
+            </apex:pageBlockButtons>
+            <!-- Display all 12 blank lines to recieve input from user -->
+            <apex:pageBlockTable value="{!newinvoices}" var="inv">
+                <apex:column value="{!inv.Account__c}"></apex:column>
+                <apex:column value="{!inv.Opportunity__c}"></apex:column>
+                <apex:column headerValue="Amount">
+                    <apex:inputField value="{!inv.Amount__c}"></apex:inputField>
+                </apex:column>
+                <apex:column headerValue="Due Date">
+                    <apex:inputField value="{!inv.Due_Date__c}"></apex:inputField>
+                </apex:column>                
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
