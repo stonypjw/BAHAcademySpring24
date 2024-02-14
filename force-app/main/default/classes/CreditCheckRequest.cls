@@ -5,6 +5,7 @@ global class CreditCheckRequest {
     global static void CreditCheck(List<String> accountIds){
 
         callCreditCheckAPI(accountIds[0]);
+        System.Debug('This ran without waiting for the credit checks');
 
     }
 
@@ -13,6 +14,7 @@ global class CreditCheckRequest {
 
         Account acct = [SELECT Id,
                                Name,
+                               CreditCheckId__c,
                                Owner.Name,
                                Owner.Email
                         FROM Account
@@ -38,5 +40,34 @@ global class CreditCheckRequest {
         System.Debug('HTTP Response: '+res.getStatusCode());
         System.Debug('HTTP Response: '+res.getStatus());
         System.Debug('HTTP Response: '+res.getBody());
+
+        /*Example return structure
+        {"type":"Credit_Check__c",
+        "url":"/services/data/v60.0/sobjects/Credit_Check__c/a023u00001UgbcjAAB"},
+        "Company_Name__c":"Burlington Textiles Corp of America",
+        "Requestor_Name__c":"Jeremy White",
+        "Requestor_Email__c":"jeremy.white@stonyp.com",
+        "Name":"Jeremy White Burlington Textiles Corp of America",
+        "Id":"a023u00001UgbcjAAB"}
+        */
+
+        ccReturn ccResponse = (ccReturn) JSON.deserialize(res.getBody(), ccReturn.class);
+        System.Debug(ccResponse.Name);
+
+        acct.CreditCheckId__c = ccResponse.Id;
+        update acct;
+
+
+
+    }
+
+    public class ccReturn {
+        public String type;
+        public String url;
+        public String Company_Name_c;
+        public String Requestor_Name_c;
+        public String Requestor_Email_c;
+        public String Name;
+        public String Id;
     }
 }
