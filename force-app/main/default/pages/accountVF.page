@@ -5,6 +5,7 @@
 <!-- Begin Default Content REMOVE THIS -->
 <h1>Congratulations</h1>
 You have eovveridden the standard view page
+<c:disclaimer level="1" recordname="{!Account.Name}"></c:disclaimer>
 <apex:pageBlock title="My Content">
 
 <apex:pageBlockTable value="{!account.Contacts}" var="item">
