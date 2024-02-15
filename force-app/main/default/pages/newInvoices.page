@@ -7,12 +7,24 @@
                 <apex:commandButton value="Save" action="{!save}"></apex:commandButton>
                 <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
             </apex:pageBlockButtons>
+            <apex:pageblock title="Payment Summary">
+                <apex:outputPanel id="summary">
+                <apex:pageblockSection columns="3">
+                    <apex:pageBlockSectionItem>Expected Total Amount: {!o.Amount}</apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>Current Payments Total: {!totalInvoices}</apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem>Variance: {!invoiceRemainder}</apex:pageBlockSectionItem>
+                </apex:pageblockSection>
+            </apex:outputPanel>
+            </apex:pageblock>
             <!-- Display all 12 blank lines to recieve input from user -->
             <apex:pageBlockTable value="{!newinvoices}" var="inv">
                 <apex:column value="{!inv.Account__c}"></apex:column>
                 <apex:column value="{!inv.Opportunity__c}"></apex:column>
                 <apex:column headerValue="Amount">
-                    <apex:inputField value="{!inv.Amount__c}"></apex:inputField>
+                    <apex:inputField value="{!inv.Amount__c}">
+                        <apex:actionSupport event="onchange" action="{!recalcTotalInvoices}"
+                                            rerender="summary"></apex:actionSupport>
+                    </apex:inputField>
                 </apex:column>
                 <apex:column headerValue="Due Date">
                     <apex:inputField value="{!inv.Due_Date__c}"></apex:inputField>

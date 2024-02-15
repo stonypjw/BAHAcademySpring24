@@ -1,7 +1,10 @@
 public with sharing class InvoicesController {
 
     private Id oid;
-    private Opportunity o;
+    public Opportunity o {get;set;}
+    public Decimal totalInvoices {get;set;}
+    public Decimal invoiceRemainder {get;set;}
+    public List<Invoice__c> newinvoices {get;set;}
 
     public InvoicesController(ApexPages.StandardSetController ssc) {
         oid = ApexPages.currentPage().getParameters().get('id');
@@ -12,25 +15,19 @@ public with sharing class InvoicesController {
         o = [SELECT Id, AccountId, Amount, CloseDate 
         FROM Opportunity
         WHERE Id = :oid LIMIT 1];
-    }
+        invoiceRemainder = 0;
+        if(newinvoices == null){
+            newinvoices = new List<Invoice__c>();
 
-    public List<Invoice__c> newinvoices{
-        get{
-            if(newinvoices == null){
-                newinvoices = new List<Invoice__c>();
-
-                for (Integer i=0; i < 12; i++){
-                    Invoice__c inv = new Invoice__c();
-                        inv.Opportunity__c = oid;
-                        inv.Account__c = o.AccountId;
-                        inv.Amount__c = 0;
-                        inv.Due_Date__c = Date.today();
-                    newinvoices.add(inv);
-                }
+            for (Integer i=0; i < 12; i++){
+                Invoice__c inv = new Invoice__c();
+                    inv.Opportunity__c = oid;
+                    inv.Account__c = o.AccountId;
+                    inv.Amount__c = 0;
+                    inv.Due_Date__c = Date.today();
+                newinvoices.add(inv);
             }
-          return newinvoices;  
         }
-        set{}
     }
 
     public PageReference save() {
@@ -55,5 +52,18 @@ public with sharing class InvoicesController {
         //Return the user to the applicable opportunity page
         PageReference pr = new PageReference('/'+oid);
         return pr;
+    }
+
+    public void recalcTotalInvoices() {
+        if(newinvoices == null){
+            totalInvoices = 0;
+        }
+        else {
+            totalInvoices = 0;
+            for(Invoice__c inv : newinvoices){
+                totalInvoices += inv.Amount__c;
+            }
+        }
+        invoiceRemainder = o.Amount - totalinvoices;
     }
 }
