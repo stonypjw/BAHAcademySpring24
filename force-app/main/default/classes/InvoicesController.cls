@@ -5,6 +5,7 @@ public with sharing class InvoicesController {
     public Decimal totalInvoices {get;set;}
     public Decimal invoiceRemainder {get;set;}
     public List<Invoice__c> newinvoices {get;set;}
+    public Boolean isBalanced {get; set;}
 
     public InvoicesController(ApexPages.StandardSetController ssc) {
         oid = ApexPages.currentPage().getParameters().get('id');
@@ -28,6 +29,7 @@ public with sharing class InvoicesController {
                 newinvoices.add(inv);
             }
         }
+        recalcTotalInvoices();
     }
 
     public PageReference save() {
@@ -65,5 +67,6 @@ public with sharing class InvoicesController {
             }
         }
         invoiceRemainder = o.Amount - totalinvoices;
+        if(invoiceRemainder == 0 ){isBalanced = true;} else {isBalanced = false;}
     }
 }

@@ -4,7 +4,7 @@
         <apex:pageBlock>
             <apex:pageBlockButtons>
                 <!-- Need a Save button and a cancel button -->
-                <apex:commandButton value="Save" action="{!save}"></apex:commandButton>
+                <apex:commandButton id="savebutton" value="Save" action="{!save}" disabled="{!NOT(isBalanced)}"></apex:commandButton>
                 <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
             </apex:pageBlockButtons>
             <apex:pageblock title="Payment Summary">
@@ -23,7 +23,7 @@
                 <apex:column headerValue="Amount">
                     <apex:inputField value="{!inv.Amount__c}">
                         <apex:actionSupport event="onchange" action="{!recalcTotalInvoices}"
-                                            rerender="summary"></apex:actionSupport>
+                                            rerender="summary,savebutton"></apex:actionSupport>
                     </apex:inputField>
                 </apex:column>
                 <apex:column headerValue="Due Date">
