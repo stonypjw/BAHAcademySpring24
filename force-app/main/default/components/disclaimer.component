@@ -11,5 +11,6 @@
             The data you are viewing for {!recordname} is priveleged, please do not disclose to any unauthorized parties. 
             If you have any concerns please contact Genwatt Legal.
         </p>
+        <apex:pageBlock title="Experiement with styles"></apex:pageBlock>
     </apex:componentBody>
 </apex:component>

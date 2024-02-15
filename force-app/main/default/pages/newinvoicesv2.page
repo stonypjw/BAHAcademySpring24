@@ -1,0 +1,34 @@
+<apex:page standardController="Invoice__c" recordSetVar="Invoices" 
+                                           extensions="invoicescontrollerv2">
+    <apex:form>
+        <apex:pageBlock>
+            <apex:pageBlockButtons>
+                <!-- Need a Save button and a cancel button -->
+                <apex:commandButton id="savebutton" value="Save" action="{!save}" disabled="{!NOT(isBalanced)}"></apex:commandButton>
+                <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
+            </apex:pageBlockButtons>
+            <apex:pageblock title="Payment Summary">
+                <apex:outputpanel id="summary">
+                    <apex:pageBlockSection columns="3">
+                        <apex:pageblockSectionItem>Expected Total Amount: {!o.Amount} </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem>Current Payments Total: {!totalInvoices} </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem>Variance: {!invoiceRemainder} </apex:pageblockSectionItem>
+                    </apex:pageBlockSection>
+                </apex:outputpanel>
+            </apex:pageblock>
+            <!-- Display all 12 blank lines to recieve input from user -->
+            <apex:pageBlockTable value="{!newinvoices}" var="inv">
+                <apex:column value="{!inv.Account__c}"></apex:column>
+                <apex:column value="{!inv.Opportunity__c}"></apex:column>
+                <apex:column headerValue="Amount">
+                    <apex:inputField value="{!inv.Amount__c}">
+                        <apex:actionSupport event="onchange" action="{!recalcTotalInvoices}" rerender="summary,savebutton"/>
+                    </apex:inputField>
+                </apex:column>
+                <apex:column headerValue="Due Date">
+                    <apex:inputField value="{!inv.Due_Date__c}"></apex:inputField>
+                </apex:column>                
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
