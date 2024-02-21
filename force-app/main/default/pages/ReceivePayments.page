@@ -1,0 +1,22 @@
+<apex:page standardController="Account" extensions="ReceivePaymentsController">
+    <apex:form >
+    <apex:pageBlock title="Outstanding Invoices">
+        <apex:pageBlockButtons >
+            <!-- Need a Save button and a cancel button -->
+            <apex:commandButton id="savebutton" value="Save" action="{!save}"></apex:commandButton>
+            <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
+        </apex:pageBlockButtons>
+    <apex:pageBlockTable value="{!newinvoices}" var="inv">
+        <apex:column value="{!inv.Opportunity__c}"></apex:column>
+        <apex:column value="{!inv.Amount__c}">
+        </apex:column>
+        <apex:column value="{!inv.Invoice_Date__c}"></apex:column>
+        <apex:column value="{!inv.Due_Date__c}">
+        </apex:column> 
+        <apex:column headerValue="Reconcile payment">
+            <apex:inputField value="{!inv.Paid__c}"></apex:inputField>
+        </apex:column>         
+    </apex:pageBlockTable>
+</apex:pageblock>
+</apex:form>
+</apex:page>

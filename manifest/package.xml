@@ -17,6 +17,11 @@
         <name>ApexTestSuite</name>
     </types>
     <types>
+        <members>unfiled$public/invDoc</members>
+        <members>unfiled$public/invStatement</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
         <members>*</members>
         <name>ApexTrigger</name>
     </types>

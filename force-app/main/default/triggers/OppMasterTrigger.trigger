@@ -4,7 +4,7 @@ trigger OppMasterTrigger on Opportunity (before insert, after insert,
                                          after undelete) {
 if(trigger.isBefore){
     if(trigger.isInsert){
-       OppHandler.applyNamingConvention(trigger.new);
+        OppHandler.applyNamingConvention(trigger.new);
     }
     if(trigger.isUpdate){   
         OppHandler.applyNamingConvention(trigger.new);
@@ -15,9 +15,10 @@ if(trigger.isBefore){
 
 if(trigger.isAfter){
     if(trigger.isInsert){
-        OppHandler.createInvoiceFromOpportunity(trigger.new);
+       OppHandler.createInvoiceFromOpportunity(trigger.new);
     }
     if(trigger.isUpdate){  
+        System.Debug('trigger update');
         OppHandler.createInvoiceFromOpportunity(trigger.new,trigger.oldmap);     
     }
     if(trigger.isDelete){       

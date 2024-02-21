@@ -1,0 +1,17 @@
+<apex:page standardController="Position__c" extensions="PositionDetailController" showHeader="true" sidebar="false">
+    <apex:detail relatedList="false"/>
+    <apex:form >
+        <li>
+            First Name: <apex:inputText value="{!firstName}" required="true"/>
+        </li>
+        <li>
+            Last Name:<apex:inputText value="{!lastName}" required="true"/>
+        </li>
+        <li>
+            Email:<apex:inputText value="{!email}" required="true"/>
+        </li>
+        
+        
+        <apex:commandButton action="{!apply}" value="Apply"/>
+    </apex:form>
+</apex:page>

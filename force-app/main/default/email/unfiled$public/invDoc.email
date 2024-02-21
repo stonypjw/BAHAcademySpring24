@@ -1,0 +1,35 @@
+<messaging:emailTemplate subject="Invoice Details" recipientType="Contact" relatedToType="Invoice__c">
+    <messaging:htmlEmailBody >
+        <html>
+            <body>
+                <p>Dear {!relatedTo.Account__r.Name},</p>
+                <p>Please find the details of your invoice:</p>
+                <table border="1">
+                    <tr>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+
+                    </tr>
+                    <tr>
+                        <td>{!relatedTo.Amount__c}</td>
+                        <td>{!relatedTo.Due_Date__c}</td>
+
+                    </tr>
+                </table>
+                <p>Thank you for your business.</p>
+
+            </body>
+        </html>
+    </messaging:htmlEmailBody>
+    
+    <!-- Attachment -->
+    <messaging:attachment renderAs="pdf">
+        <html>
+            <body>
+                <p>Invoice Details:</p>
+                <p>Amount: {!relatedTo.Amount__c}</p>
+                <p>Due Date: {!relatedTo.Due_Date__c}</p>
+            </body>
+        </html>
+    </messaging:attachment>
+</messaging:emailTemplate>

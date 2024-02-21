@@ -1,0 +1,11 @@
+<apex:component controller="statementLineItemsController" access="global">
+    <apex:attribute name="accountId" type="String" description="AccountId" />
+    <ul>
+        <apex:repeat var="inv" value="{!relatedInvoices}">
+            <li>Project: {!inv.Opportunity__r.Name}</li>
+            <li>Amount: {!inv.Amount__c}</li>
+            <li>Date Presented: {!inv.Invoice_Date__c}</li>
+            <li>Date Paid: {!inv.Date_Paid__c}</li>
+        </apex:repeat>
+    </ul>
+</apex:component>

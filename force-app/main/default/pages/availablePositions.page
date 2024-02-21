@@ -1,0 +1,14 @@
+<apex:page controller="PositionController" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock title="Open Positions">
+            <apex:pageBlockTable value="{!positions}" var="pos">
+                <apex:column headerValue="Position Name">
+                    <apex:outputLink value="/apex/PositionDetails?id={!pos.Id}">
+                        {!pos.Name}
+                    </apex:outputLink>
+                </apex:column>
+                <apex:column value="{!pos.Description__c}" headerValue="Description"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

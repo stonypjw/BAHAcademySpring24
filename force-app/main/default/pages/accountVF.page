@@ -17,7 +17,7 @@ You have eovveridden the standard view page
 
 </apex:pageBlock>
 
-<apex:detail/>
+<apex:detail />
 
 <!-- End Default Content REMOVE THIS -->
 </apex:page>

@@ -1,0 +1,9 @@
+<apex:page >
+  
+  This is still a VF page, honest!!
+  
+  <apex:pageBlock title="THis is a page block">
+  THis is inside the page block
+  </apex:pageBlock>
+  
+</apex:page>

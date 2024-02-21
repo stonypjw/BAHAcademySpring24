@@ -1,8 +1,8 @@
 <apex:page standardController="Invoice__c" recordSetVar="Invoices" 
                                            extensions="invoicescontrollerv2">
-    <apex:form>
-        <apex:pageBlock>
-            <apex:pageBlockButtons>
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
                 <!-- Need a Save button and a cancel button -->
                 <apex:commandButton id="savebutton" value="Save" action="{!save}" disabled="{!NOT(isBalanced)}"></apex:commandButton>
                 <apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
@@ -10,9 +10,9 @@
             <apex:pageblock title="Payment Summary">
                 <apex:outputpanel id="summary">
                     <apex:pageBlockSection columns="3">
-                        <apex:pageblockSectionItem>Expected Total Amount: {!o.Amount} </apex:pageblockSectionItem>
-                        <apex:pageblockSectionItem>Current Payments Total: {!totalInvoices} </apex:pageblockSectionItem>
-                        <apex:pageblockSectionItem>Variance: {!invoiceRemainder} </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem >Expected Total Amount: {!o.Amount} </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem >Current Payments Total: {!totalInvoices} </apex:pageblockSectionItem>
+                        <apex:pageblockSectionItem >Variance: {!invoiceRemainder} </apex:pageblockSectionItem>
                     </apex:pageBlockSection>
                 </apex:outputpanel>
             </apex:pageblock>

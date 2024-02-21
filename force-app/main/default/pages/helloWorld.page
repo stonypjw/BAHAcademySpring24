@@ -1,19 +1,19 @@
-<apex:page>
+<apex:page >
 
 <h1>Hello {!$User.FirstName}</h1>
 
 <apex:pageBlock title="My first pageblock">
     <apex:pageBlockSection collapsible="true" columns="3" title="3 col section">
-        <apex:pageBlockSectionItem>A</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>B</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>C</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>D</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >A</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >B</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >C</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >D</apex:pageBlockSectionItem>
     </apex:pageBlockSection>
     <apex:pageBlockSection collapsible="true" title="2 col section">
-        <apex:pageBlockSectionItem>A</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>B</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>C</apex:pageBlockSectionItem>
-        <apex:pageBlockSectionItem>D</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >A</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >B</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >C</apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >D</apex:pageBlockSectionItem>
     </apex:pageBlockSection>
 </apex:pageBlock>
 </apex:page>

@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="Genwatt Monthly Statement" recipientType="Contact" relatedToType="Account">
+    <messaging:htmlEmailBody >
+        <html>
+            <body>
+                <p>Dear {!recipient.Name},</p>
+                <p>Below is the activity for your account from last month:</p>
+
+                <p>Invoices Paid or Presented:</p>
+                <c:invoiceList accountId="{!relatedTo.Id}"/>
+                
+                <p>Thank you for your business.</p>
+
+            </body>
+        </html>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

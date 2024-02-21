@@ -1,0 +1,16 @@
+<apex:page standardController="Account" extensions="ShowScheduleController" renderAs="PDF">
+
+    <apex:pageBlock title="Payment Summary">
+
+ 
+
+    <apex:pageBlockTable value="{!newinvoices}" var="inv">
+        <apex:column value="{!inv.Opportunity__c}"></apex:column>
+        <apex:column value="{!inv.Amount__c}">
+        </apex:column>
+        <apex:column value="{!inv.Invoice_Date__c}"></apex:column>
+        <apex:column value="{!inv.Due_Date__c}">
+        </apex:column>     
+    </apex:pageBlockTable>
+</apex:pageblock>
+</apex:page>

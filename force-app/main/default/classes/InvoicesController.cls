@@ -2,20 +2,28 @@ public with sharing class InvoicesController {
     private Id oid;
     public Opportunity o {get;set;}
     public Decimal totalInvoices { get; set; }
+    public Decimal expectedAmount {get; set; }
     public Decimal invoiceRemainder { get; set; }
     public Boolean isBalanced {get; set;}
+
+
     public List<Invoice__c> newinvoices{get; set;}
 
-    public invoicescontrollerv2(ApexPages.StandardSetController ssc) {
+    public invoicescontroller(ApexPages.StandardSetController ssc) {
         oid = ApexPages.currentPage().getParameters().get('id');
         loadOpportunity();
     }
 
     private void loadOpportunity(){
-        o = [SELECT Id, AccountId, Amount, CloseDate, (SELECT ID,Account__c,Opportunity__c,Amount__c,Due_Date__c FROM Invoices__r)
+        o = [SELECT Id, AccountId, Account.Billing_Contact__c,Amount, CloseDate,invoiceLeadTime__c, (SELECT ID,Account__c,Opportunity__c,Amount__c,Due_Date__c,isFee__c,latefeeApplied__c,Paid__c,Invoice_Date__c,Billing_Contact__c FROM Invoices__r)
         FROM Opportunity
         WHERE Id = :oid LIMIT 1];
-        invoiceRemainder = o.Amount;
+        invoiceRemainder = 0;
+        expectedAmount = o.Amount;
+        //Check existing invoices for fees 
+        for(Invoice__c inv : o.Invoices__r){
+            if(inv.isFee__c){expectedAmount += inv.Amount__c;}
+        }
         if (o.Invoices__r.size() > 0){
             newinvoices = new List<Invoice__c>(o.Invoices__r);
                 for (Integer i=0; i < (12 - o.Invoices__r.size()); i++){
@@ -23,7 +31,9 @@ public with sharing class InvoicesController {
                         inv.Opportunity__c = oid;
                         inv.Account__c = o.AccountId;
                         inv.Amount__c = 0;
-                        inv.Due_Date__c = Date.today();
+                        inv.Due_Date__c = Date.today()+Integer.valueOf(o.invoiceLeadTIme__c);
+                        inv.Invoice_Date__c = Date.today();
+                        inv.Billing_Contact__c = o.Account.Billing_Contact__c;
                     newinvoices.add(inv);
                 }
         }
@@ -35,7 +45,9 @@ public with sharing class InvoicesController {
                         inv.Opportunity__c = oid;
                         inv.Account__c = o.AccountId;
                         inv.Amount__c = 0;
-                        inv.Due_Date__c = Date.today();
+                        inv.Due_Date__c = Date.today()+Integer.valueOf(o.invoiceLeadTIme__c);
+                        inv.Invoice_Date__c = Date.today();
+                        inv.Billing_Contact__c = o.Account.Billing_Contact__c;
                     newinvoices.add(inv);
                 }
         }
@@ -55,7 +67,7 @@ public with sharing class InvoicesController {
                 }
             }
         
-        invoiceRemainder = o.Amount - totalInvoices;
+        invoiceRemainder = expectedAmount - totalInvoices;
         if(invoiceRemainder == 0 ){isBalanced = true;} else {isBalanced = false;}
     }
 
@@ -69,9 +81,11 @@ public with sharing class InvoicesController {
         for (Invoice__c inv : newinvoices){
             if(inv.Amount__c > 0){
                 if(inv.Id != null){
+                    inv.Invoice_Date__c = inv.Due_Date__c - Integer.valueof(o.invoiceLeadTIme__c);
                     invToUpdate.add(inv);
                 }
                 else{
+                    inv.Invoice_Date__c = inv.Due_Date__c - Integer.valueof(o.invoiceLeadTIme__c);
                     invToCreate.add(inv);
                 }  
             }

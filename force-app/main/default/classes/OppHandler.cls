@@ -1,5 +1,7 @@
 public with sharing class OppHandler {
 
+    static Map<Id,Id> oppToBC = new Map<Id,Id>();
+
     public static void applyNamingConvention(List<Opportunity> triggernew){
 
     //trigger.new will be a List<Opportunity> that need to be processed
@@ -28,7 +30,9 @@ public with sharing class OppHandler {
         inv.Account__c          = opp.AccountId;
         inv.Opportunity__c      = opp.Id;
         inv.Amount__c           = opp.Amount;
-        inv.Due_Date__c         = opp.CloseDate + 30;
+        inv.Due_Date__c         = opp.CloseDate + Integer.valueOf(opp.invoiceLeadTime__c);
+        inv.Invoice_Date__c     = opp.CloseDate;
+        inv.Billing_Contact__c  = oppToBC.get(opp.AccountId);
         return inv;
     }
 
@@ -48,7 +52,7 @@ public with sharing class OppHandler {
             }
     
     }
-        
+    System.Debug(invToCreate);
         //Submit to database 
         // check to see if my list of invoices has any values, and if so, insert them into the database
         if (!invToCreate.isEmpty()) {
@@ -59,6 +63,13 @@ public with sharing class OppHandler {
     public static void createInvoiceFromOpportunity(List<Opportunity> triggernew){
        
         List<Invoice__c> invToCreate = new List<Invoice__c>();
+        Set<Id> accIds = new Set<Id>();
+        for (Opportunity opp : triggernew) {
+            accIds.add(opp.AccountId);
+        }
+        for (Account a : [SELECT Id,Billing_Contact__c FROM Account WHERE Id IN : accIds]){
+            oppToBC.put(a.Id,a.Billing_Contact__c);
+        }
         // iterate over the records and check the stage for Closed-Won
         for (Opportunity opp : triggernew) {
         // if its an existing Opportunity, check to see if the stage is closed won
@@ -68,6 +79,7 @@ public with sharing class OppHandler {
                 invToCreate.add(createInvoice(opp));
             }
     }
+     System.Debug(invToCreate);
         
         //Submit to database 
         // check to see if my list of invoices has any values, and if so, insert them into the database
